@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { EmailInput } from "@/components/ui/email-input/server/email-input";
 import { PasswordInput } from "@/components/ui/password-input/client/password-input";
 import { FieldSeparator } from "@/components/ui/field";
+import Link from "next/link";
 
 export default function SignInForm() {
   const form = useForm<SignInFormSchema>({
@@ -98,6 +99,16 @@ export default function SignInForm() {
         </svg>
         Login with Google
       </Button>
+
+      <p className="text-center text-sm text-muted-foreground mt-4">
+        Don't have an account?{" "}
+        <Link
+          href="/auth/sign-up"
+          className="text-primary underline"
+        >
+          Sign Up
+        </Link>
+      </p>
     </Form>
   );
 }
