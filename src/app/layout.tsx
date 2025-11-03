@@ -8,7 +8,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 export const metadata: Metadata = {
   title: "FakeBot",
   description: "FakeBot is a platform for creating and sharing fake news.",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  icons: [{ rel: "icon", url: "/fakebot-wo-text.png" }],
 };
 
 const quicksand = Quicksand({
