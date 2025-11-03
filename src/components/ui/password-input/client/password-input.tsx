@@ -13,8 +13,12 @@ import { Button } from "../../button";
 
 export function PasswordInput<T extends FieldValues, K extends Path<T>>({
   field,
+  autoComplete,
+  placeholder,
 }: {
   field: ControllerRenderProps<T, K>;
+  autoComplete: string;
+  placeholder: string;
 }) {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -22,8 +26,8 @@ export function PasswordInput<T extends FieldValues, K extends Path<T>>({
     <InputGroup>
       <InputGroupInput
         type={showPassword ? "text" : "password"}
-        autoComplete="current-password"
-        placeholder="Password"
+        autoComplete={autoComplete}
+        placeholder={placeholder}
         {...field}
       />
       <InputGroupAddon>

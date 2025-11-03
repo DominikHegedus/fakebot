@@ -21,6 +21,8 @@ import {
 import Link from "next/link";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { FieldSeparator } from "@/components/ui/field";
+import GoogleButton from "@/components/ui/google-button/client/google-button";
 
 export default function SignInForm() {
   const form = useForm<SignUpFormSchema>({
@@ -66,7 +68,11 @@ export default function SignInForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <PasswordInput field={field} />
+                <PasswordInput
+                  field={field}
+                  autoComplete="new-password"
+                  placeholder="Password"
+                />
               </FormControl>
               <FormDescription>Enter your password to sign up.</FormDescription>
               <FormMessage />
@@ -80,7 +86,11 @@ export default function SignInForm() {
             <FormItem>
               <FormLabel>Password Confirmation</FormLabel>
               <FormControl>
-                <PasswordInput field={field} />
+                <PasswordInput
+                  field={field}
+                  autoComplete="new-password"
+                  placeholder="Password Confirmation"
+                />
               </FormControl>
               <FormDescription>Confirm your password.</FormDescription>
               <FormMessage />
@@ -94,13 +104,12 @@ export default function SignInForm() {
             <FormItem>
               <FormLabel>Terms and Conditions</FormLabel>
               <FormControl>
-                <Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-aria-checked:border-primary-600 has-aria-checked:bg-primary-50 dark:has-aria-checked:border-primary-900 dark:has-aria-checked:bg-primary-950">
+                <Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-aria-checked:border-primary has-aria-checked:bg-primary/5 dark:has-aria-checked:border-primary dark:has-aria-checked:bg-primary">
                   <Checkbox
                     id="terms-and-conditions"
                     checked={field.value}
                     onCheckedChange={field.onChange}
-                    className="data-[state=checked]:border-primary-600 data-[state=checked]:bg-primary-600 data-[state=checked]:text-white dark:data-[state=checked]:border-primary-700 dark:data-[state=checked]:bg-primary-700"
-                    aria-describedby="terms-and-conditions-description"
+                    className="data-[state=checked]:border-primary data-[state=checked]:bg-primary dark:data-[state=checked]:border-primary dark:data-[state=checked]:bg-primary"
                   />
                   <div className="grid gap-1.5 font-normal">
                     <p className="text-sm leading-none font-medium">
@@ -126,9 +135,6 @@ export default function SignInForm() {
                   </div>
                 </Label>
               </FormControl>
-              <FormDescription>
-                I accept the terms and conditions.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -140,6 +146,12 @@ export default function SignInForm() {
           Sign Up
         </Button>
       </form>
+
+      <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card my-4">
+        Or continue with
+      </FieldSeparator>
+
+      <GoogleButton />
 
       <p className="text-center text-sm text-muted-foreground mt-4">
         Already have an account?{" "}
