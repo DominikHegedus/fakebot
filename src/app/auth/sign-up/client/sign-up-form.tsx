@@ -12,8 +12,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { EmailInput } from "@/components/ui/email-input/server/email-input";
-import { PasswordInput } from "@/components/ui/password-input/client/password-input";
+import { EmailInput } from "@/components/form-fields/email-input/server/email-input";
+import { PasswordInput } from "@/components/form-fields/password-input/client/password-input";
 import {
   signUpFormSchema,
   type SignUpFormSchema,
@@ -22,7 +22,7 @@ import Link from "next/link";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { FieldSeparator } from "@/components/ui/field";
-import GoogleButton from "@/components/ui/google-button/client/google-button";
+import GoogleButton from "@/components/auth/google-button/client/google-button";
 
 export default function SignInForm() {
   const form = useForm<SignUpFormSchema>({

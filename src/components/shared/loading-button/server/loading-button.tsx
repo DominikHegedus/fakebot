@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
-import { Button, type ButtonVariantProps } from "../../button";
-import { Spinner } from "../../spinner";
+import { Button, type ButtonVariantProps } from "../../../ui/button";
+import { Spinner } from "../../../ui/spinner";
 
 export default function LoadingButton({
   pending,

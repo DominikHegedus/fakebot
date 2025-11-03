@@ -5,9 +5,9 @@ import { useState } from "react";
 import type { ErrorContext } from "better-auth/react";
 import { toast } from "sonner";
 import { CircleAlertIcon, CircleCheckIcon } from "lucide-react";
-import LoadingButton from "../../loading-button/server/loading-button";
+import LoadingButton from "../../../shared/loading-button/server/loading-button";
 import { useRouter } from "next/navigation";
-import type { ButtonVariantProps } from "../../button";
+import type { ButtonVariantProps } from "../../../ui/button";
 
 export default function GoogleButton({
   variant = "outline",
@@ -21,6 +21,7 @@ export default function GoogleButton({
       {
         provider: "google",
         errorCallbackURL: "/error/auth/sign-in",
+        callbackURL: "/app",
       },
       {
         onRequest: () => {

@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/input-group";
 import type { ControllerRenderProps, FieldValues, Path } from "react-hook-form";
 import { useState } from "react";
-import { Button } from "../../button";
+import { Button } from "../../../ui/button";
 
 export function PasswordInput<T extends FieldValues, K extends Path<T>>({
   field,
