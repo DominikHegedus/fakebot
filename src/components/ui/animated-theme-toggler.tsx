@@ -14,10 +14,10 @@ interface AnimatedThemeTogglerProps
 export const AnimatedThemeToggler = ({
   className,
   duration = 400,
-  onToggle,
+  onThemeChange,
   ...props
 }: AnimatedThemeTogglerProps & {
-  onToggle?: (theme: "light" | "dark") => void;
+  onThemeChange?: (theme: "light" | "dark") => void;
 }) => {
   const [isDark, setIsDark] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -47,7 +47,7 @@ export const AnimatedThemeToggler = ({
         setIsDark(newTheme);
         document.documentElement.classList.toggle("dark");
         localStorage.setItem("theme", newTheme ? "dark" : "light");
-        onToggle?.(newTheme ? "dark" : "light");
+        onThemeChange?.(newTheme ? "dark" : "light");
       });
     }).ready;
 
