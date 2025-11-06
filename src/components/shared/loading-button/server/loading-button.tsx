@@ -8,13 +8,15 @@ export default function LoadingButton({
   className = "",
   variant = "default",
   size = "default",
+  type = "button",
   onClick,
   ...props
 }: {
   pending: boolean;
   children: React.ReactNode;
-  onClick?: () => void;
   className?: string;
+  type?: "button" | "submit";
+  onClick?: () => void;
 } & ButtonVariantProps) {
   return (
     <Button
@@ -23,6 +25,7 @@ export default function LoadingButton({
       disabled={pending}
       variant={variant}
       size={size}
+      type={type}
       {...props}
     >
       {pending && <Spinner />}

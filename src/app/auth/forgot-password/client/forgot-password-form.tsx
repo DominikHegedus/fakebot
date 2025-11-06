@@ -20,6 +20,7 @@ import {
 } from "../forgot-password-form.schema";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
+import LoadingButton from "@/components/shared/loading-button/server/loading-button";
 
 export default function ForgotPasswordForm() {
   const form = useForm<ForgotPasswordFormSchema>({
@@ -72,12 +73,13 @@ export default function ForgotPasswordForm() {
         <p className="text-muted-foreground text-sm italic">
           (Note: No email will be sent if you are not registered!)
         </p>
-        <Button
+        <LoadingButton
+          pending={sendResetPasswordEmail.isPending}
           type="submit"
           className="w-full cursor-pointer"
         >
           Send reset password email
-        </Button>
+        </LoadingButton>
       </form>
 
       <p className="text-center text-sm text-muted-foreground mt-4">

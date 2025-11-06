@@ -17,8 +17,21 @@ import {
   resetPasswordFormSchema,
   type ResetPasswordFormSchema,
 } from "../reset-password-form.schema";
+import { toast } from "sonner";
+import { api } from "@/trpc/react";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
+import LoadingButton from "@/components/shared/loading-button/server/loading-button";
 
 export default function ResetPasswordForm() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const token = searchParams.get("token");
+
+  if (!token) {
+    router.push("/auth/sign-in");
+  }
+
   const form = useForm<ResetPasswordFormSchema>({
     resolver: zodResolver(resetPasswordFormSchema),
     defaultValues: {
@@ -27,8 +40,25 @@ export default function ResetPasswordForm() {
     },
   });
 
-  function onSubmit(values: ResetPasswordFormSchema) {
-    console.log(values);
+  const resetPassword = api.auth.resetPassword.useMutation({
+    onSuccess: () => {
+      toast.success("Password reset successfully");
+      redirect("/auth/sign-in");
+    },
+    onError: () => {
+      toast.error("Failed to reset password");
+    },
+  });
+
+  function onSubmit({ password }: ResetPasswordFormSchema) {
+    if (!token) {
+      return;
+    }
+
+    resetPassword.mutate({
+      newPassword: password,
+      token: token,
+    });
   }
 
   return (
@@ -73,12 +103,13 @@ export default function ResetPasswordForm() {
             </FormItem>
           )}
         />
-        <Button
+        <LoadingButton
+          pending={resetPassword.isPending}
           type="submit"
           className="w-full cursor-pointer"
         >
           Reset Password
-        </Button>
+        </LoadingButton>
       </form>
     </Form>
   );
