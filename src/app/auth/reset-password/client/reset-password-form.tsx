@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -18,17 +17,21 @@ import {
 } from "../reset-password-form.schema";
 import { toast } from "sonner";
 import { api } from "@/trpc/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import LoadingButton from "@/components/shared/loading-button/server/loading-button";
+import { use } from "react";
 
-export default function ResetPasswordForm() {
-  const searchParams = useSearchParams();
+export default function ResetPasswordForm({
+  searchParams,
+}: {
+  searchParams: Promise<{ token?: string }>;
+}) {
+  const params = use(searchParams);
   const router = useRouter();
 
-  const token = searchParams.get("token");
-
-  if (!token) {
-    router.push("/auth/sign-in");
+  if (!params.token) {
+    redirect("/auth/sign-in");
   }
 
   const form = useForm<ResetPasswordFormSchema>({
@@ -50,13 +53,13 @@ export default function ResetPasswordForm() {
   });
 
   function onSubmit({ password }: ResetPasswordFormSchema) {
-    if (!token) {
+    if (!params.token) {
       return;
     }
 
     resetPassword.mutate({
       newPassword: password,
-      token: token,
+      token: params.token,
     });
   }
 
@@ -79,7 +82,6 @@ export default function ResetPasswordForm() {
                   placeholder="Password"
                 />
               </FormControl>
-              <FormDescription>Enter your password to sign up.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -97,7 +99,6 @@ export default function ResetPasswordForm() {
                   placeholder="Password Confirmation"
                 />
               </FormControl>
-              <FormDescription>Confirm your password.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
