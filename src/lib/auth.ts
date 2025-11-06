@@ -4,6 +4,7 @@ import { db } from "@/server/db";
 import { nextCookies } from "better-auth/next-js";
 import { api } from "@/trpc/server";
 import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 export const auth = betterAuth({
   database: prismaAdapter(db, {
@@ -19,10 +20,16 @@ export const auth = betterAuth({
     },
     onPasswordReset: async () => {
       toast.success("Password reset successfully");
+      redirect("/auth/sign-in");
     },
   },
   emailVerification: {
     sendOnSignUp: true,
+    autoSignInAfterVerification: true,
+    afterEmailVerification: async () => {
+      toast.success("Email verified successfully!");
+      redirect("/app");
+    },
     sendVerificationEmail: async (data) => {
       await api.mailing.sendVerificationEmail({
         to: data.user.email,
