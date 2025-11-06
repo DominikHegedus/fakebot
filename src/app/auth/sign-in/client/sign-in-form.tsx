@@ -25,9 +25,14 @@ import { toast } from "sonner";
 import { api } from "@/trpc/react";
 import { useRouter } from "next/navigation";
 import LoadingButton from "@/components/shared/loading-button/server/loading-button";
+import { useState } from "react";
 
 export default function SignInForm() {
   const router = useRouter();
+
+  const [googleLoginPending, setGoogleLoginPending] = useState(false);
+  const [emailPasswordLoginPending, setEmailPasswordLoginPending] =
+    useState(false);
 
   const form = useForm<SignInFormSchema>({
     resolver: zodResolver(signInFormSchema),
@@ -100,6 +105,7 @@ export default function SignInForm() {
         />
         <LoadingButton
           pending={signIn.isPending}
+          disabled={googleLoginPending}
           type="submit"
           className="w-full cursor-pointer"
         >
@@ -111,7 +117,10 @@ export default function SignInForm() {
         Or continue with
       </FieldSeparator>
 
-      <GoogleButton />
+      <GoogleButton
+        disabled={emailPasswordLoginPending}
+        onIsPendingChange={setGoogleLoginPending}
+      />
 
       <p className="text-center text-sm text-muted-foreground mt-4">
         Don't have an account?{" "}

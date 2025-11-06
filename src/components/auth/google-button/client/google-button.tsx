@@ -12,7 +12,12 @@ import type { ButtonVariantProps } from "../../../ui/button";
 export default function GoogleButton({
   variant = "outline",
   size = "lg",
-}: ButtonVariantProps) {
+  disabled,
+  onIsPendingChange,
+}: ButtonVariantProps & {
+  disabled?: boolean;
+  onIsPendingChange?: (status: boolean) => void;
+}) {
   const router = useRouter();
   const [isPending, setIsPending] = useState(false);
 
@@ -26,9 +31,11 @@ export default function GoogleButton({
       {
         onRequest: () => {
           setIsPending(true);
+          onIsPendingChange?.(true);
         },
         onSuccess: () => {
           setIsPending(false);
+          onIsPendingChange?.(false);
           router.push("/app");
           toast.success("Signed in successfully!", {
             description: "You are now logged in.",

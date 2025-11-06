@@ -4,6 +4,7 @@ import { Spinner } from "../../../ui/spinner";
 
 export default function LoadingButton({
   pending,
+  disabled,
   children,
   className = "",
   variant = "default",
@@ -17,6 +18,7 @@ export default function LoadingButton({
   className?: string;
   type?: "button" | "submit";
   onClick?: () => void;
+  disabled?: boolean;
 } & ButtonVariantProps) {
   return (
     <Button
