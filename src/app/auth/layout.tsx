@@ -4,6 +4,7 @@ import { BgClientWrapper } from "@/components/ui/bg-client-wrapper";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 
+// TODO: when chaning the theme, notify the BGClientWrapper
 export default function AuthLayout({
   children,
 }: {
