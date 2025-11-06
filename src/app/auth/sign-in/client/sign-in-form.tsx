@@ -21,8 +21,14 @@ import { PasswordInput } from "@/components/form-fields/password-input/client/pa
 import { FieldSeparator } from "@/components/ui/field";
 import Link from "next/link";
 import GoogleButton from "@/components/auth/google-button/client/google-button";
+import { toast } from "sonner";
+import { api } from "@/trpc/react";
+import { useRouter } from "next/navigation";
+import LoadingButton from "@/components/shared/loading-button/server/loading-button";
 
 export default function SignInForm() {
+  const router = useRouter();
+
   const form = useForm<SignInFormSchema>({
     resolver: zodResolver(signInFormSchema),
     defaultValues: {
@@ -31,8 +37,18 @@ export default function SignInForm() {
     },
   });
 
+  const signIn = api.auth.signIn.useMutation({
+    onSuccess: () => {
+      toast.success("Signed in successfully");
+      router.push("/app");
+    },
+    onError: () => {
+      toast.error("Failed to sign in");
+    },
+  });
+
   function onSubmit(values: SignInFormSchema) {
-    console.log(values);
+    signIn.mutate(values);
   }
 
   return (
@@ -82,12 +98,13 @@ export default function SignInForm() {
             </FormItem>
           )}
         />
-        <Button
+        <LoadingButton
+          pending={signIn.isPending}
           type="submit"
           className="w-full cursor-pointer"
         >
           Sign In
-        </Button>
+        </LoadingButton>
       </form>
 
       <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card my-4">

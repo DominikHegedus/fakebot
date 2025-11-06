@@ -25,9 +25,12 @@ import GoogleButton from "@/components/auth/google-button/client/google-button";
 import { Input } from "@/components/ui/input";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import LoadingButton from "@/components/shared/loading-button/server/loading-button";
 
 export default function SignInForm() {
+  const router = useRouter();
+
   const form = useForm<SignUpFormSchema>({
     resolver: zodResolver(signUpFormSchema),
     defaultValues: {
@@ -40,7 +43,7 @@ export default function SignInForm() {
   const signUp = api.auth.signUp.useMutation({
     onSuccess: () => {
       toast.success("Signed up successfully");
-      redirect("/app/verify-your-email");
+      router.push("/app/verify-your-email");
     },
     onError: () => {
       toast.error("Failed to sign up");
@@ -182,12 +185,13 @@ export default function SignInForm() {
             </FormItem>
           )}
         />
-        <Button
+        <LoadingButton
+          pending={signUp.isPending}
           type="submit"
           className="w-full cursor-pointer"
         >
           Sign Up
-        </Button>
+        </LoadingButton>
       </form>
 
       <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card my-4">

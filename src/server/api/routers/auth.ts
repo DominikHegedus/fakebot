@@ -5,6 +5,14 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 
 export const authRouter = createTRPCRouter({
+  signIn: publicProcedure
+    .input(z.object({ email: z.email(), password: z.string().min(8) }))
+    .mutation(async ({ ctx, input }) => {
+      return await auth.api.signInEmail({
+        body: { email: input.email, password: input.password },
+      });
+    }),
+
   signUp: publicProcedure
     .input(
       z.object({

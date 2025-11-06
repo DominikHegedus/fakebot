@@ -11,7 +11,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
 import { PasswordInput } from "@/components/form-fields/password-input/client/password-input";
 import {
   resetPasswordFormSchema,
@@ -19,7 +18,7 @@ import {
 } from "../reset-password-form.schema";
 import { toast } from "sonner";
 import { api } from "@/trpc/react";
-import { redirect, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import LoadingButton from "@/components/shared/loading-button/server/loading-button";
 
 export default function ResetPasswordForm() {
@@ -43,7 +42,7 @@ export default function ResetPasswordForm() {
   const resetPassword = api.auth.resetPassword.useMutation({
     onSuccess: () => {
       toast.success("Password reset successfully");
-      redirect("/auth/sign-in");
+      router.push("/auth/sign-in");
     },
     onError: () => {
       toast.error("Failed to reset password");
