@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -24,6 +23,9 @@ import { Label } from "@/components/ui/label";
 import { FieldSeparator } from "@/components/ui/field";
 import GoogleButton from "@/components/auth/google-button/client/google-button";
 import { Input } from "@/components/ui/input";
+import { api } from "@/trpc/react";
+import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 export default function SignInForm() {
   const form = useForm<SignUpFormSchema>({
@@ -35,8 +37,30 @@ export default function SignInForm() {
     },
   });
 
-  function onSubmit(values: SignUpFormSchema) {
-    console.log(values);
+  const signUp = api.auth.signUp.useMutation({
+    onSuccess: () => {
+      toast.success("Signed up successfully");
+      redirect("/app/verify-your-email");
+    },
+    onError: () => {
+      toast.error("Failed to sign up");
+    },
+  });
+
+  function onSubmit({
+    name,
+    email,
+    password,
+    passwordConfirmation,
+    termsAndConditions,
+  }: SignUpFormSchema) {
+    signUp.mutate({
+      name: name,
+      email: email,
+      password: password,
+      passwordConfirmation: passwordConfirmation,
+      termsAndConditions: termsAndConditions,
+    });
   }
 
   return (

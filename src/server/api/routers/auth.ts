@@ -8,6 +8,7 @@ export const authRouter = createTRPCRouter({
   signUp: publicProcedure
     .input(
       z.object({
+        name: z.string().min(1),
         email: z.email(),
         password: z.string().min(8),
         passwordConfirmation: z.string().min(8),
@@ -18,7 +19,7 @@ export const authRouter = createTRPCRouter({
       try {
         const data = await auth.api.signUpEmail({
           body: {
-            name: "Anonymous",
+            name: input.name,
             email: input.email,
             password: input.password,
           },
