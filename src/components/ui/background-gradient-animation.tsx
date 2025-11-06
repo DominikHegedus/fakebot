@@ -1,16 +1,12 @@
 "use client";
+
 import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
 
 export const BackgroundGradientAnimation = ({
-  gradientBackgroundStart = "oklch(0.9787 0.0128 228.9242)",
-  gradientBackgroundEnd = "oklch(0.9787 0.0128 228.9242)",
-  firstColor = "46, 184, 161",
-  secondColor = "243, 209, 250",
-  thirdColor = "46, 184, 161",
-  fourthColor = "207, 145, 23",
-  fifthColor = "207, 145, 23",
-  pointerColor = "240, 250, 255",
+  theme = "light",
+  gradientBackgroundStart = "var(--muted)",
+  gradientBackgroundEnd = "var(--muted)",
   size = "80%",
   blendingValue = "hard-light",
   children,
@@ -18,14 +14,9 @@ export const BackgroundGradientAnimation = ({
   interactive = true,
   containerClassName,
 }: {
+  theme?: "light" | "dark";
   gradientBackgroundStart?: string;
   gradientBackgroundEnd?: string;
-  firstColor?: string;
-  secondColor?: string;
-  thirdColor?: string;
-  fourthColor?: string;
-  fifthColor?: string;
-  pointerColor?: string;
   size?: string;
   blendingValue?: string;
   children?: React.ReactNode;
@@ -33,6 +24,15 @@ export const BackgroundGradientAnimation = ({
   interactive?: boolean;
   containerClassName?: string;
 }) => {
+  const isDark = theme === "dark";
+
+  const firstColor = isDark ? "46, 184, 161" : "34, 195, 168";
+  const secondColor = isDark ? "209, 133, 224" : "243, 209, 250";
+  const thirdColor = isDark ? "46, 184, 161" : "34, 195, 168";
+  const fourthColor = isDark ? "207, 145, 23" : "252, 211, 131";
+  const fifthColor = isDark ? "207, 145, 23" : "252, 211, 131";
+  const pointerColor = isDark ? "57, 62, 70" : "240, 250, 255";
+
   const interactiveRef = useRef<HTMLDivElement>(null);
 
   const [curX, setCurX] = useState(0);

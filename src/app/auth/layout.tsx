@@ -1,4 +1,6 @@
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
+import { BgClientWrapper } from "@/components/ui/bg-client-wrapper";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 
@@ -8,7 +10,14 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <BackgroundGradientAnimation>
+    <BgClientWrapper>
+      <div className="absolute z-51 inset-0 top-0 left-0 p-4">
+        <div className="flex justify-end items-center">
+          <div className="rounded-lg border-primary border-2 flex items-center justify-center p-2">
+            <AnimatedThemeToggler className="size-6 cursor-pointer" />
+          </div>
+        </div>
+      </div>
       <div className="absolute z-50 inset-0 flex min-h-svh flex-col items-center justify-center p-6 md:p-10">
         <div className="w-full max-w-sm md:max-w-4xl">
           <div className="flex flex-col gap-6">
@@ -36,6 +45,6 @@ export default function AuthLayout({
           </div>
         </div>
       </div>
-    </BackgroundGradientAnimation>
+    </BgClientWrapper>
   );
 }
