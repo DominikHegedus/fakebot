@@ -1,4 +1,3 @@
-import SignOutButton from "@/components/auth/sign-out/client/sign-out-button";
 import { checkSession } from "@/server/helpers/check-session";
 
 export default async function AppPage() {
@@ -7,7 +6,6 @@ export default async function AppPage() {
   return (
     <div>
       <h1>App</h1>
-      <SignOutButton />
     </div>
   );
 }
