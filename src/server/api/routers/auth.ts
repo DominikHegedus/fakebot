@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 export const authRouter = createTRPCRouter({
   signUp: publicProcedure
@@ -35,5 +36,39 @@ export const authRouter = createTRPCRouter({
       }
 
       return { success: true };
+    }),
+
+  resetPassword: publicProcedure
+    .input(
+      z.object({
+        token: z.string(),
+        newPassword: z.string().min(8),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await auth.api.resetPassword({
+        body: {
+          newPassword: input.newPassword,
+          token: input.token,
+        },
+      });
+    }),
+
+  changePassword: publicProcedure
+    .input(
+      z.object({
+        currentPassword: z.string().min(8),
+        newPassword: z.string().min(8),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await auth.api.changePassword({
+        body: {
+          currentPassword: input.currentPassword,
+          newPassword: input.newPassword,
+          revokeOtherSessions: true,
+        },
+        headers: await headers(),
+      });
     }),
 });
