@@ -53,7 +53,6 @@ export default function SignInForm() {
                   field={field}
                 />
               </FormControl>
-              <FormDescription>Enter your email to sign in.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -63,7 +62,15 @@ export default function SignInForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <div className="flex items-center">
+                <FormLabel htmlFor="password">Password</FormLabel>
+                <Link
+                  href="/auth/forgot-password"
+                  className="ml-auto text-sm underline-offset-2 hover:underline"
+                >
+                  Forgot your password?
+                </Link>
+              </div>
               <FormControl>
                 <PasswordInput
                   field={field}
@@ -71,7 +78,6 @@ export default function SignInForm() {
                   placeholder="Password"
                 />
               </FormControl>
-              <FormDescription>Enter your password to sign in.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
