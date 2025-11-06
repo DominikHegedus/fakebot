@@ -13,6 +13,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async ({ user, url, token }, request) => {
+      const { api } = await import("@/trpc/server");
       await api.mailing.sendPasswordResetEmail({
         to: user.email,
         url: url,
@@ -31,6 +32,7 @@ export const auth = betterAuth({
       redirect("/app");
     },
     sendVerificationEmail: async (data) => {
+      const { api } = await import("@/trpc/server");
       await api.mailing.sendVerificationEmail({
         to: data.user.email,
         url: data.url,
