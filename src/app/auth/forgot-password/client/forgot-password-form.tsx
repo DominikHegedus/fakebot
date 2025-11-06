@@ -48,7 +48,7 @@ export default function ForgotPasswordForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8"
+        className="space-y-4"
       >
         <FormField
           control={form.control}
@@ -69,6 +69,9 @@ export default function ForgotPasswordForm() {
             </FormItem>
           )}
         />
+        <p className="text-muted-foreground text-sm italic">
+          (Note: No email will be sent if you are not registered!)
+        </p>
         <Button
           type="submit"
           className="w-full cursor-pointer"

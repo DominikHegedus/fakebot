@@ -23,6 +23,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { FieldSeparator } from "@/components/ui/field";
 import GoogleButton from "@/components/auth/google-button/client/google-button";
+import { Input } from "@/components/ui/input";
 
 export default function SignInForm() {
   const form = useForm<SignUpFormSchema>({
@@ -46,17 +47,37 @@ export default function SignInForm() {
       >
         <FormField
           control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Name{" "}
+                <span className="text-muted-foreground text-sm italic">
+                  (first name is enough)
+                </span>
+              </FormLabel>
+              <FormControl>
+                <Input
+                  autoFocus
+                  type="text"
+                  placeholder="John"
+                  autoComplete="given-name"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <EmailInput
-                  autoFocus
-                  field={field}
-                />
+                <EmailInput field={field} />
               </FormControl>
-              <FormDescription>Enter your email to sign up.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -74,7 +95,6 @@ export default function SignInForm() {
                   placeholder="Password"
                 />
               </FormControl>
-              <FormDescription>Enter your password to sign up.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -92,7 +112,6 @@ export default function SignInForm() {
                   placeholder="Password Confirmation"
                 />
               </FormControl>
-              <FormDescription>Confirm your password.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
