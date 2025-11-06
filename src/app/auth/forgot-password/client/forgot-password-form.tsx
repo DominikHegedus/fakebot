@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -17,6 +18,8 @@ import {
   forgotPasswordFormSchema,
   type ForgotPasswordFormSchema,
 } from "../forgot-password-form.schema";
+import { api } from "@/trpc/react";
+import { toast } from "sonner";
 
 export default function ForgotPasswordForm() {
   const form = useForm<ForgotPasswordFormSchema>({
@@ -26,8 +29,19 @@ export default function ForgotPasswordForm() {
     },
   });
 
-  function onSubmit(values: ForgotPasswordFormSchema) {
-    console.log(values);
+  const sendResetPasswordEmail = api.auth.requestResetPassword.useMutation({
+    onSuccess: () => {
+      toast.success("Reset password email sent successfully");
+    },
+    onError: () => {
+      toast.error("Failed to send reset password email");
+    },
+  });
+
+  function onSubmit({ email }: ForgotPasswordFormSchema) {
+    sendResetPasswordEmail.mutate({
+      email: email,
+    });
   }
 
   return (
@@ -48,6 +62,9 @@ export default function ForgotPasswordForm() {
                   field={field}
                 />
               </FormControl>
+              <FormDescription>
+                Enter your email to receive a reset password email!
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

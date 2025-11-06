@@ -38,6 +38,17 @@ export const authRouter = createTRPCRouter({
       return { success: true };
     }),
 
+  requestResetPassword: publicProcedure
+    .input(z.object({ email: z.email() }))
+    .mutation(async ({ ctx, input }) => {
+      return await auth.api.requestPasswordReset({
+        body: {
+          email: input.email,
+          redirectTo: `${process.env.BETTER_AUTH_URL}/auth/reset-password`,
+        },
+      });
+    }),
+
   resetPassword: publicProcedure
     .input(
       z.object({
