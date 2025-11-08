@@ -12,21 +12,29 @@ import Link from "next/link";
 
 export function NavSpecial({
   item,
+  compact = false,
 }: {
   item: {
     title: string;
     url: string;
     icon?: LucideIcon;
   };
+  compact?: boolean;
 }) {
   return (
-    <SidebarMenu className="px-2">
+    <SidebarMenu className="p-2">
       <SidebarMenuItem>
-        <SidebarMenuButton asChild>
-          <RainbowButton asChild>
+        <SidebarMenuButton
+          tooltip={item.title}
+          asChild
+        >
+          <RainbowButton
+            variant="default"
+            asChild
+          >
             <Link href={item.url}>
               {item.icon && <item.icon />}
-              <span>{item.title}</span>
+              {!compact && <span>{item.title}</span>}
             </Link>
           </RainbowButton>
         </SidebarMenuButton>

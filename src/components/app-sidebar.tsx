@@ -25,6 +25,7 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { NavSpecial } from "./nav-special";
 
@@ -163,15 +164,21 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { open, openMobile } = useSidebar();
   return (
     <Sidebar
       variant="floating"
       collapsible="icon"
       {...props}
     >
-      <SidebarHeader>FakeBots 🤖</SidebarHeader>
-      <SidebarContent>
-        <NavSpecial item={data.navSpecial} />
+      <SidebarHeader className="flex items-center justify-center gap-2">
+        {open || openMobile ? <span>FakeBots</span> : <span>FB</span>}
+      </SidebarHeader>
+      <SidebarContent className="flex flex-col items-center justfiy-start gap-2">
+        <NavSpecial
+          item={data.navSpecial}
+          compact={!open && !openMobile}
+        />
         <NavMain items={data.navMain} />
         <NavProjects projects={data.projects} />
       </SidebarContent>
