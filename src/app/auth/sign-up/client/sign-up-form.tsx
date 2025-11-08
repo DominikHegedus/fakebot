@@ -10,7 +10,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
 import { EmailInput } from "@/components/form-fields/email-input/server/email-input";
 import { PasswordInput } from "@/components/form-fields/password-input/client/password-input";
 import {
@@ -25,7 +24,7 @@ import GoogleButton from "@/components/auth/google-button/client/google-button";
 import { Input } from "@/components/ui/input";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import LoadingButton from "@/components/shared/loading-button/server/loading-button";
 
 export default function SignInForm() {

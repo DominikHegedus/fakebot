@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -8,16 +10,28 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import CreateBotForm from "../../create/create-bot-form";
+import CreateBotForm from "../../create/client/create-bot-form";
+import { useRouter } from "next/navigation";
 
 export default function CreateModalPage() {
+  const router = useRouter();
+
+  function handleOpenChange(open: boolean) {
+    if (!open) {
+      router.back();
+    }
+  }
+
   return (
-    <Dialog defaultOpen>
-      <DialogContent className="sm:max-w-[425px]">
+    <Dialog
+      defaultOpen
+      onOpenChange={handleOpenChange}
+    >
+      <DialogContent className="sm:max-w-[425px] md:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
+          <DialogTitle>Create a new bot</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you&apos;re done.
+            Create a new bot to start using FakeBot.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4">
