@@ -17,6 +17,8 @@ import { NavSpecial } from "./nav-special";
 import type { User } from "better-auth";
 import { NavBots } from "./nav-bots";
 import { NavSimple } from "./nav-simple";
+import Image from "next/image";
+import Link from "next/link";
 
 const data = {
   navSpecial: {
@@ -113,7 +115,19 @@ export function AppSidebar({
       {...props}
     >
       <SidebarHeader className="flex items-center justify-center gap-2">
-        {open || openMobile ? <span>FakeBots</span> : <span>FB</span>}
+        <Link href="/app">
+          <Image
+            className="rounded-md"
+            src={
+              open || openMobile
+                ? "/fakebot-w-text.png"
+                : "/fakebot-wo-text.png"
+            }
+            alt="FakeBot"
+            width={open || openMobile ? 64 : 32}
+            height={open || openMobile ? 64 : 32}
+          />
+        </Link>
       </SidebarHeader>
       <SidebarContent className="flex flex-col items-center justfiy-start gap-2">
         <NavSpecial
