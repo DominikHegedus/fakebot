@@ -1,13 +1,6 @@
 import { AppSidebar } from "@/components/app-sidebar";
+import { NavBreadcrumbs } from "@/components/nav-breadcrumbs";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
@@ -35,19 +28,7 @@ export default async function AppLayout({
                 orientation="vertical"
                 className="mr-2 data-[orientation=vertical]:h-4"
               />
-              <Breadcrumb>
-                <BreadcrumbList>
-                  <BreadcrumbItem className="hidden md:block">
-                    <BreadcrumbLink href="#">
-                      Building Your Application
-                    </BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator className="hidden md:block" />
-                  <BreadcrumbItem>
-                    <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
+              <NavBreadcrumbs />
             </div>
 
             <div className="flex items-center justify-center border-2 p-1 rounded-md mr-4">
