@@ -29,7 +29,7 @@ export function NavSpecial({
           asChild
         >
           <RainbowButton
-            variant="default"
+            variant="outline"
             asChild
           >
             <Link href={item.url}>
