@@ -28,6 +28,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { NavSpecial } from "./nav-special";
+import type { User } from "better-auth";
 
 const data = {
   user: {
@@ -53,7 +54,7 @@ const data = {
     },
   ],
   navSpecial: {
-    title: "Discover public bots ✨",
+    title: "Discover bots ✨",
     url: "/app/discover",
     icon: BotIcon,
   },
@@ -163,8 +164,18 @@ const data = {
   ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+  user,
+  ...props
+}: React.ComponentProps<typeof Sidebar> & { user: User }) {
   const { open, openMobile } = useSidebar();
+
+  const navUser = {
+    name: user.name ?? "Anonymous",
+    email: user.email ?? "anonymous@fakebots.com",
+    avatar: user.image ?? null,
+  };
+
   return (
     <Sidebar
       variant="floating"
@@ -183,7 +194,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={navUser} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
