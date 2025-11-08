@@ -5,11 +5,13 @@ import {
   AudioWaveform,
   BookOpen,
   Bot,
+  BotIcon,
   Command,
   Frame,
   GalleryVerticalEnd,
   Map,
   PieChart,
+  Search,
   Settings2,
   SquareTerminal,
 } from "lucide-react";
@@ -17,7 +19,6 @@ import {
 import { NavMain } from "@/components/nav-main";
 import { NavProjects } from "@/components/nav-projects";
 import { NavUser } from "@/components/nav-user";
-import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
@@ -25,8 +26,8 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { NavSpecial } from "./nav-special";
 
-// This is sample data.
 const data = {
   user: {
     name: "shadcn",
@@ -50,6 +51,11 @@ const data = {
       plan: "Free",
     },
   ],
+  navSpecial: {
+    title: "Discover public bots ✨",
+    url: "/app/discover",
+    icon: BotIcon,
+  },
   navMain: [
     {
       title: "Playground",
@@ -163,10 +169,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       collapsible="icon"
       {...props}
     >
-      <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
-      </SidebarHeader>
+      <SidebarHeader>FakeBots 🤖</SidebarHeader>
       <SidebarContent>
+        <NavSpecial item={data.navSpecial} />
         <NavMain items={data.navMain} />
         <NavProjects projects={data.projects} />
       </SidebarContent>
