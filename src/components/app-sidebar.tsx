@@ -1,23 +1,9 @@
 "use client";
 
 import * as React from "react";
-import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  BotIcon,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Search,
-  Settings2,
-  SquareTerminal,
-} from "lucide-react";
+import { BookOpen, BotIcon, LifeBuoy, Search, Settings2 } from "lucide-react";
 
-import { NavMain } from "@/components/nav-main";
-import { NavProjects } from "@/components/nav-projects";
+import { NavGroup } from "@/components/nav-group";
 import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
@@ -29,137 +15,73 @@ import {
 } from "@/components/ui/sidebar";
 import { NavSpecial } from "./nav-special";
 import type { User } from "better-auth";
+import { NavBots } from "./nav-bots";
+import { NavSimple } from "./nav-simple";
 
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
   navSpecial: {
-    title: "Discover bots ✨",
-    url: "/app/discover",
+    title: "Create your own bot ✨",
+    url: "/app/create",
     icon: BotIcon,
   },
-  navMain: [
+  navGeneral: [
     {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
-      isActive: true,
-      items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
+      title: "Discover bots",
+      url: "/app/discover",
+      icon: Search,
     },
     {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
+      title: "Manage my bots",
+      url: "/app/my-bots",
+      icon: Settings2,
     },
+  ],
+  navRegular: [
     {
       title: "Documentation",
-      url: "#",
+      url: "/docs",
       icon: BookOpen,
       items: [
         {
           title: "Introduction",
-          url: "#",
+          url: "/docs/introduction",
         },
         {
           title: "Get Started",
-          url: "#",
+          url: "/docs/get-started",
         },
         {
           title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
+          url: "/docs/tutorials",
         },
       ],
     },
     {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
+      title: "Support",
+      url: "/support",
+      icon: LifeBuoy,
       items: [
         {
-          title: "General",
-          url: "#",
+          title: "FAQ",
+          url: "/support/faq",
         },
         {
-          title: "Team",
-          url: "#",
+          title: "Contact Us",
+          url: "/support/contact-us",
         },
         {
-          title: "Billing",
-          url: "#",
+          title: "Report a Bug",
+          url: "/support/report-a-bug",
         },
         {
-          title: "Limits",
-          url: "#",
+          title: "Terms of Service",
+          url: "/support/terms-of-service",
+        },
+        {
+          title: "Privacy Policy",
+          url: "/support/privacy-policy",
         },
       ],
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
     },
   ],
 };
@@ -176,6 +98,14 @@ export function AppSidebar({
     avatar: user.image ?? null,
   };
 
+  const bots = [
+    {
+      name: "Bot 1",
+      url: "#",
+      icon: BotIcon,
+    },
+  ];
+
   return (
     <Sidebar
       variant="floating"
@@ -190,8 +120,22 @@ export function AppSidebar({
           item={data.navSpecial}
           compact={!open && !openMobile}
         />
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavSimple
+          heading="General"
+          items={data.navGeneral}
+        />
+        <NavBots
+          heading="Your Bots"
+          bots={bots}
+        />
+        <NavBots
+          heading="Shared with You"
+          bots={bots}
+        />
+        <NavGroup
+          heading="Other"
+          items={data.navRegular}
+        />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={navUser} />
