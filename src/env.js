@@ -16,6 +16,10 @@ export const env = createEnv({
     BETTER_AUTH_SECRET: z.string(),
     BETTER_AUTH_URL: z.string(),
     MAILING_SERVER_URL: z.string(),
+    USER_IMG_BUCKET_URL: z.string(),
+    USER_IMG_BUCKET_NAME: z.string(),
+    USER_IMG_BUCKET_ACCESS_KEY: z.string(),
+    USER_IMG_BUCKET_ACCESS_SECRET: z.string(),
   },
 
   /**
@@ -39,6 +43,10 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     MAILING_SERVER_URL: process.env.MAILING_SERVER_URL,
+    USER_IMG_BUCKET_URL: process.env.USER_IMG_BUCKET_URL,
+    USER_IMG_BUCKET_NAME: process.env.USER_IMG_BUCKET_NAME,
+    USER_IMG_BUCKET_ACCESS_KEY: process.env.USER_IMG_BUCKET_ACCESS_KEY,
+    USER_IMG_BUCKET_ACCESS_SECRET: process.env.USER_IMG_BUCKET_ACCESS_SECRET,
     NEXT_PUBLIC_BETTER_AUTH_URL: process.env.NEXT_PUBLIC_BETTER_AUTH_URL,
   },
   /**
