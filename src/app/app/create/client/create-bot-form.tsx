@@ -1,25 +1,23 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import {
   createBotFormSchema,
   type CreateBotFormSchema,
 } from "../create-bot-form.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
+import { useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
+import CreateBotFields from "./create-bot-fields";
+import { cn } from "@/lib/utils";
 
-export default function CreateBotForm() {
+export default function CreateBotForm({
+  shouldShowSubmitButton = true,
+  submitRef,
+}: {
+  shouldShowSubmitButton?: boolean;
+  submitRef?: React.RefObject<HTMLButtonElement | null>;
+}) {
   const form = useForm<CreateBotFormSchema>({
     resolver: zodResolver(createBotFormSchema),
     defaultValues: {
@@ -27,6 +25,7 @@ export default function CreateBotForm() {
       description: "",
       isPublic: false,
     },
+    mode: "onSubmit",
   });
 
   function onSubmit({ name, description, isPublic }: CreateBotFormSchema) {
@@ -39,68 +38,22 @@ export default function CreateBotForm() {
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-4"
       >
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input
-                  autoFocus
-                  type="text"
-                  placeholder="My Bot"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+        <CreateBotFields form={form} />
+
+        <div
+          className={cn(
+            "flex justify-end",
+            !shouldShowSubmitButton ? "hidden" : ""
           )}
-        />
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Textarea
-                  rows={4}
-                  placeholder="Describe your bot in a few words..."
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="isPublic"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-aria-checked:border-primary has-aria-checked:bg-primary/5 dark:has-aria-checked:border-primary dark:has-aria-checked:bg-primary">
-                  <Checkbox
-                    id="is-public"
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                    className="data-[state=checked]:border-primary data-[state=checked]:bg-primary dark:data-[state=checked]:border-primary dark:data-[state=checked]:bg-primary"
-                  />
-                  <div className="grid gap-1.5 font-normal">
-                    <p className="text-sm leading-none font-medium">Public</p>
-                    <p className="text-muted-foreground text-sm">
-                      If you make your bot public, it will be visible to
-                      everyone. If you want to share it only with your friends,
-                      leave it private.
-                    </p>
-                  </div>
-                </Label>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        >
+          <Button
+            ref={submitRef}
+            className="w-full cursor-pointer md:w-auto"
+            type="submit"
+          >
+            Create Bot
+          </Button>
+        </div>
       </form>
     </Form>
   );

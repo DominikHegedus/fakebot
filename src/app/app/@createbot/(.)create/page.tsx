@@ -10,11 +10,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import CreateBotForm from "../../create/client/create-bot-form";
 import { useRouter } from "next/navigation";
+import { useRef } from "react";
+import CreateBotForm from "../../create/client/create-bot-form";
 
 export default function CreateModalPage() {
   const router = useRouter();
+  const submitRef = useRef<HTMLButtonElement | null>(null);
 
   function handleOpenChange(open: boolean) {
     if (!open) {
@@ -35,13 +37,21 @@ export default function CreateModalPage() {
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4">
-          <CreateBotForm />
+          <CreateBotForm
+            submitRef={submitRef}
+            shouldShowSubmitButton={false}
+          />
         </div>
         <DialogFooter>
           <DialogClose asChild>
             <Button variant="outline">Cancel</Button>
           </DialogClose>
-          <Button type="submit">Save changes</Button>
+          <Button
+            type="submit"
+            onClick={() => submitRef.current?.click()}
+          >
+            Save changes
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
