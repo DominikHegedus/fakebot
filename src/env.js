@@ -21,7 +21,7 @@ export const env = createEnv({
     USER_IMAGE_BUCKET_NAME: z.string(),
     USER_IMAGE_BUCKET_ACCESS_KEY_ID: z.string(),
     USER_IMAGE_BUCKET_SECRET_ACCESS_KEY: z.string(),
-    USER_IMAGE_BUCKET_FORCE_PATH_STYLE: z.boolean(),
+    USER_IMAGE_BUCKET_FORCE_PATH_STYLE: z.string(),
   },
 
   /**
