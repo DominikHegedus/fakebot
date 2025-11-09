@@ -106,6 +106,7 @@ model Bot {
   description String
   visibility BotVisibility @default(PRIVATE)
   isVerified Boolean @default(false)
+  imageUrl String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   createdBy String
