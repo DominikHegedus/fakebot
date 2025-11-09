@@ -10,6 +10,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum BotVisibility {
+  PRIVATE
+  UNLISTED
+  PUBLIC
+}
+
+enum BotCollaboratorRole {
+  VIEWER
+  EDITOR
+  ADMIN
+}
+
 model Post {
   id        Int      @id @default(autoincrement())
   name      String
@@ -30,6 +42,9 @@ model User {
   updatedAt     DateTime  @default(now()) @updatedAt
   sessions      Session[]
   accounts      Account[]
+  bots          Bot[]     @relation("BotsCreated")
+  botCollaborations BotCollaborator[]
+  botShareLinks BotShareLink[] @relation("ShareLinksCreated")
 
   @@index([email])
   @@unique([email])
@@ -82,4 +97,55 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+
+model Bot {
+  id        String   @id
+  name      String
+  description String
+  visibility BotVisibility @default(PRIVATE)
+  isVerified Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  createdBy String
+  createdByUser User @relation("BotsCreated", fields: [createdBy], references: [id], onDelete: Cascade)
+  collaborators BotCollaborator[]
+  shareLinks BotShareLink[]
+
+  @@index([name])
+  @@map("bot")
+}
+
+model BotCollaborator {
+  id        String   @id @default(uuid())
+  botId     String
+  userId    String
+  role      BotCollaboratorRole @default(VIEWER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  bot       Bot      @relation(fields: [botId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([botId, userId])
+  @@map("bot_collaborator")
+}
+
+model BotShareLink {
+  id              String   @id @default(uuid())
+  botId           String
+  token           String   @unique
+  createdByUserId String
+  maxUses         Int?
+  uses            Int      @default(0)
+  expiresAt       DateTime?
+  revokedAt       DateTime?
+  lastUsedAt      DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  bot             Bot      @relation(fields: [botId], references: [id], onDelete: Cascade)
+  createdByUser   User     @relation("ShareLinksCreated", fields: [createdByUserId], references: [id], onDelete: Cascade)
+
+  @@index([botId])
+  @@map("bot_share_link")
 }
